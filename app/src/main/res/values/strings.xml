@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Appliction-Manic-Time</string>
+    <string name="Email">Your Email</string>
+    <string name="Password">Your Password</string>
+    <string name="Login">Log in</string>
+    <string name="signup">Sign up</string>
+    <string name="Name">Your Name</string>
+    <string name="ConfirmPassword">Confirm Your Password</string>
+</resources>
