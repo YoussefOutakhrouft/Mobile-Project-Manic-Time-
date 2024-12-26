@@ -1,4 +1,4 @@
-package com.example.appliction_manic_time;
+package com.example.navigationdrawer;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.appliction_manic_time", appContext.getPackageName());
+        assertEquals("com.example.navigationdrawer", appContext.getPackageName());
     }
 }

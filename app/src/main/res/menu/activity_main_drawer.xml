@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/tmsystem"
+            android:icon="@drawable/baseline_dashboard_24"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/dashbaord"
+            android:icon="@drawable/baseline_task_24"
+            android:title="@string/menu_tmsystem" />
+
+        <item
+            android:id="@+id/stime"
+            android:icon="@drawable/baseline_access_time_24"
+            android:title="@string/menu_Stime" />
+        <item
+            android:id="@+id/analytics"
+            android:icon="@drawable/baseline_analytics_24"
+            android:title="@string/menu_Analytics" />
+        <item
+            android:id="@+id/applimit"
+            android:icon="@drawable/baseline_app_blocking_24"
+            android:title="@string/menu_AppLimit" />
+        <item
+            android:id="@+id/options"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/menu_options" />
+        <item
+            android:id="@+id/close"
+            android:icon="@drawable/baseline_close_24"
+            android:title="@string/menu_close" />
+    </group>
+</menu>

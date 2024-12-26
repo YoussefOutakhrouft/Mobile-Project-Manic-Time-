@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.navigationdrawer" />
+                  <option name="mobileSdkAppId" value="1:729243075632:android:34b3a8a14c1318aac7d9f5" />
+                  <option name="projectId" value="appliction-manic-time" />
+                  <option name="projectNumber" value="729243075632" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

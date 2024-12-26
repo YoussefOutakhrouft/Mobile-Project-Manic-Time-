@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "729243075632",
+    "firebase_url": "https://appliction-manic-time-default-rtdb.firebaseio.com",
+    "project_id": "appliction-manic-time",
+    "storage_bucket": "appliction-manic-time.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729243075632:android:f8997f67cb5a8117c7d9f5",
+        "android_client_info": {
+          "package_name": "com.example.appliction_manic_time"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729243075632-9p4v86s3j12mc5a2tm1g6j8d5lih2bv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADb8SeBI2XarqCU-l1S4lyfzW2wHdbgpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729243075632-9p4v86s3j12mc5a2tm1g6j8d5lih2bv0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729243075632:android:34b3a8a14c1318aac7d9f5",
+        "android_client_info": {
+          "package_name": "com.example.navigationdrawer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729243075632-9p4v86s3j12mc5a2tm1g6j8d5lih2bv0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADb8SeBI2XarqCU-l1S4lyfzW2wHdbgpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729243075632-9p4v86s3j12mc5a2tm1g6j8d5lih2bv0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

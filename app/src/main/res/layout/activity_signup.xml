@@ -23,7 +23,7 @@
             <TextView
                 android:id="@+id/textView11"
                 style="@style/TextTitleLogin"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="25dp"
                 android:fontFamily="serif"
                 android:text="Sign up with Email" />
         </LinearLayout>

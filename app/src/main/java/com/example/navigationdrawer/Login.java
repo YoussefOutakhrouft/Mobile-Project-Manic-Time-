@@ -1,4 +1,4 @@
-package com.example.appliction_manic_time;
+package com.example.navigationdrawer;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,16 +12,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
     private EditText Email,Password;
     private TextView em,pass;
     private Button btn;
+    FirebaseAuth mAuth;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +60,7 @@ public class Login extends AppCompatActivity {
         em=findViewById(R.id.textView);
         pass=findViewById(R.id.textView2);
         btn=findViewById(R.id.button);
+        mAuth=FirebaseAuth.getInstance();
         btn.setEnabled(false);
         btn.setTextColor(Color.parseColor("#B3B5B4"));
 
@@ -98,16 +121,35 @@ public class Login extends AppCompatActivity {
     }
 
     public void afficher(View view) {
-        if(Email.getText().toString().equals("0000@gmail.com") && Password.getText().toString().equals("0000")){
-            Toast.makeText(this, "Bravo", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this, "L'Email ou le mot de passe que vous avez saisie est incorrect", Toast.LENGTH_LONG).show();
+
+        String email = Email.getText().toString();
+        String password = Password.getText().toString();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(Login.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
+            return;
         }
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Connexion réussie", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+
+                    Toast.makeText(Login.this, "Échec de l'authentification.", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
     }
 
     public void Signup(View view) {
 
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
+        finish();
     }
 }

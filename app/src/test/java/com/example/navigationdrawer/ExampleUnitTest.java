@@ -1,4 +1,4 @@
-package com.example.appliction_manic_time;
+package com.example.navigationdrawer;
 
 import org.junit.Test;
 

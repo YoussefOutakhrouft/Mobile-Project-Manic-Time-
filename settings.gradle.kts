@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Appliction-Manic-Time"
+rootProject.name = "NAVIGATION DRAWER"
 include(":app")
  
