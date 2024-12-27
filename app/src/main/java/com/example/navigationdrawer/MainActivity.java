@@ -1,16 +1,16 @@
 package com.example.navigationdrawer;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.navigationdrawer.databinding.ActivityMainBinding;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private String selectedDate = "";
     private ArrayList<String> todayTaskList = new ArrayList<>();
     private ArrayList<String> otherTaskList = new ArrayList<>();
-    private ArrayAdapter<String> todayAdapter, otherAdapter;
+    private ArrayAdapter<String> todayAdapter;
     private Map<String, ArrayList<String>> taskDescriptions = new HashMap<>();
 
     @Override
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Configuration de la navigation
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.dashbaord, R.id.tmsystem, R.id.stime)
+                R.id.dashboard,R.id.tmsystem, R.id.stime, R.id.analytics, R.id.applimit, R.id.promodo)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         // Gestion de la sélection d'une date
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year; // Format de la date
-            updateTaskListView(); // Mettre à jour la liste affichée en fonction de la date
+            updateTaskListView();
         });
 
         // Gestion de l'ajout d'une tâche
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             String task = taskInput.getText().toString();
             String description = taskDescription.getText().toString();
             if (!task.isEmpty() && !selectedDate.isEmpty()) {
-                // Ajouter la tâche dans la liste appropriée
                 if (selectedDate.equals(getTodayDate())) {
                     todayTaskList.add(task);
                     taskDescriptions.put(task, new ArrayList<>());
@@ -92,14 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     taskDescriptions.put(task, new ArrayList<>());
                 }
 
-                // Ajouter la description si elle existe
                 if (!description.isEmpty()) {
                     taskDescriptions.get(task).add(description);
                 }
 
-                taskInput.setText(""); // Réinitialiser le champ de saisie
-                taskDescription.setText(""); // Réinitialiser la description
-                updateTaskListView(); // Mettre à jour la liste affichée
+                taskInput.setText("");
+                taskDescription.setText("");
+                updateTaskListView();
             } else {
                 Toast.makeText(MainActivity.this, "Please enter a task and select a date", Toast.LENGTH_SHORT).show();
             }
@@ -111,20 +110,40 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> descriptions = taskDescriptions.get(selectedTask);
             StringBuilder descriptionText = new StringBuilder("Task Description:\n");
 
-            for (String desc : descriptions) {
-                descriptionText.append(desc).append("\n");
+            if (descriptions != null) {
+                for (String desc : descriptions) {
+                    descriptionText.append(desc).append("\n");
+                }
             }
 
-            Toast.makeText(MainActivity.this, descriptionText.toString(), Toast.LENGTH_LONG).show();
+            // Créer un AlertDialog pour afficher la description de la tâche
+            new android.app.AlertDialog.Builder(MainActivity.this)
+                    // Titre de la boîte de dialogue
+                    .setMessage(descriptionText.toString())  // Contenu de la boîte de dialogue
+                    .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())  // Bouton OK pour fermer le dialogue
+                    .show();  // Afficher le dialogue
         });
+
+
+        // Gestion des clics sur les éléments du menu
+  /*      navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.logout:
+                    logout();
+                    return true;
+                case R.id.close:
+                    closeApp();
+                    return true;
+                default:
+                    return false;
+            }
+        }); */
     }
 
-    // Méthode pour obtenir la date du jour au format dd/MM/yyyy
     private String getTodayDate() {
         return new java.text.SimpleDateFormat("d/M/yyyy").format(new java.util.Date());
     }
 
-    // Mise à jour des ListViews en fonction de la date sélectionnée
     private void updateTaskListView() {
         if (selectedDate.equals(getTodayDate())) {
             taskListView.setAdapter(todayAdapter);
@@ -134,17 +153,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    private void logout() {
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void closeApp() {
+        finish();
+        System.exit(0);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }

@@ -1,0 +1,102 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:minHeight="48dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:spacing="12dp"> <!-- Espacement entre les éléments -->
+
+        <!-- Timer Label -->
+        <TextView
+            android:id="@+id/timerLabel"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="00:00"
+            android:textSize="68sp"
+            android:textColor="#212121"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Total Focus Time Input -->
+        <EditText
+            android:id="@+id/totalFocusTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Total Focus Time"
+            android:inputType="number"
+            android:padding="16dp"
+            android:minHeight="48dp"
+            android:background="@color/gray"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Focus Time Input -->
+        <EditText
+            android:id="@+id/focusTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Focus Time"
+            android:inputType="number"
+            android:padding="16dp"
+            android:minHeight="48dp"
+            android:background="@color/gray"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Break Time Input -->
+        <EditText
+            android:id="@+id/breakTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Break Time"
+            android:inputType="number"
+            android:padding="16dp"
+            android:minHeight="48dp"
+            android:background="@color/gray"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:layout_marginBottom="24dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Start Button -->
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Pause Button -->
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pause"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" /> <!-- Espacement vers le bas -->
+
+        <!-- Reset Button -->
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

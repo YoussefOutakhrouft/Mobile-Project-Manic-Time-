@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/dashbaord">
+    app:startDestination="@+id/tmsystem">
 
     <!-- Fragment pour la page d'accueil -->
     <fragment
-        android:id="@+id/options"
-        android:name="com.example.navigationdrawer.ui.home.options"
-        android:label="@string/menu_options"
+        android:id="@+id/logout"
+        android:name="com.example.navigationdrawer.ui.home.logout"
+        android:label="@string/menu_Analytics"
         tools:layout="@layout/fragment_home" />
 
     <!-- Fragment pour la page de slideshow -->
@@ -28,17 +28,16 @@
 
     <!-- Fragment pour le tableau de bord -->
     <fragment
-        android:id="@+id/dashbaord"
+        android:id="@+id/tmsystem"
         android:name="com.example.navigationdrawer.ui.gallery.GalleryFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_tmsystem"
         tools:layout="@layout/fragment_gallery" />
 
     <!-- Fragment pour le système TM -->
     <fragment
-        android:id="@+id/tmsystem"
+        android:id="@+id/dashboard"
         android:name="com.example.navigationdrawer.ui.home.TmSystemFragment"
-        android:label="@string/menu_tmsystem"
-        tools:layout="@layout/fragment_tm_system" />
+        android:label="@string/menu_home" />
 
     <!-- Fragment pour la gestion du temps (par exemple) -->
     <fragment
@@ -46,4 +45,9 @@
         android:name="com.example.navigationdrawer.ui.home.stime"
         android:label="@string/menu_Stime"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/promodo"
+        android:name="com.example.navigationdrawer.ui.home.promodo"
+        android:label="@string/menu_promodo" />
+
 </navigation>

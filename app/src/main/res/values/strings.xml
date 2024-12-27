@@ -16,12 +16,10 @@
 
     <string name="menu_home">Dashboard</string>
     <string name="menu_tmsystem">TM System</string>
-    <string name="menu_Stime">Smart Time</string>
+    <string name="menu_Stime">Smart Timing</string>
     <string name="menu_Analytics">Analytics</string>
-    <string name="menu_AppLimit">App limit</string>
-    <string name="menu_options">Options</string>
+    <string name="menu_promodo">Promodo</string>
+    <string name="menu_AppLimit">App Limit</string>
+    <string name="menu_logout">Log Out</string>
     <string name="menu_close">Close</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_dashboard">menu_dashboard\n</string>
 </resources>
