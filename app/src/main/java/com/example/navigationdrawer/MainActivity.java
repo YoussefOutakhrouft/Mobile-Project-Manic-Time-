@@ -2,7 +2,9 @@ package com.example.navigationdrawer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +22,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.navigationdrawer.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     // Déclarations pour la gestion des tâches
     private CalendarView calendarView;
@@ -43,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference("tasks").child(user.getUid()); // Utiliser l'UID de l'utilisateur connecté
+        }
+
+        getTasksFromFirebase();
 
         // Initialiser le layout principal avec la barre d'outils
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -83,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             String task = taskInput.getText().toString();
             String description = taskDescription.getText().toString();
             if (!task.isEmpty() && !selectedDate.isEmpty()) {
+
+                addTaskToFirebase(task, description, selectedDate);
+
                 if (selectedDate.equals(getTodayDate())) {
                     todayTaskList.add(task);
                     taskDescriptions.put(task, new ArrayList<>());
@@ -114,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 for (String desc : descriptions) {
                     descriptionText.append(desc).append("\n");
                 }
+            } else {
+                descriptionText.append("No description available.");
             }
 
             // Créer un AlertDialog pour afficher la description de la tâche
@@ -155,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         Intent intent = new Intent(MainActivity.this, Login.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
@@ -169,5 +193,56 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    public void logout(MenuItem item) {
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void closeApp(MenuItem item) {
+        FirebaseAuth.getInstance().signOut();
+        finish();
+
+        System.exit(0);
+    }
+
+    private void getTasksFromFirebase() {
+        if (mDatabase != null) {
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    todayTaskList.clear();
+                    for (DataSnapshot taskSnapshot : snapshot.getChildren()) {
+                        Task task = taskSnapshot.getValue(Task.class);  // Convertit chaque tâche en objet Task
+                        if (task != null) {
+                            if (task.getDate().equals(getTodayDate())) {
+                                todayTaskList.add(task.getTaskName());
+                                taskDescriptions.put(task.getTaskName(), new ArrayList<>());
+                            }  // Ajoute le nom de la tâche à la liste
+                        }
+                    }
+                    todayAdapter.notifyDataSetChanged();  // Met à jour la ListView
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(MainActivity.this, "Failed to load tasks.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void addTaskToFirebase(String taskName, String taskDescription, String date) {
+        if (mDatabase != null) {
+            String taskId = mDatabase.push().getKey();  // Crée une clé unique pour la tâche
+            if (taskId != null) {
+                Task task = new Task(taskName, taskDescription, date);
+                mDatabase.child(taskId).setValue(task);  // Ajoute la tâche à Firebase
+            }
+        }
     }
 }
